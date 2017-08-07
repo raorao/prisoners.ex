@@ -2,17 +2,25 @@ defmodule Prisoners do
   @moduledoc """
   Documentation for Prisoners.
   """
+  alias  Prisoners.Simulation.{HeadToHead, RoundRobin, Generations}
 
-  @doc """
-  Hello world.
+  # %{left: left, right: right, runs: runs}
+  def head_to_head(opts) do
+    HeadToHead.simulate(opts)
+  end
 
-  ## Examples
+  # %{runs: runs}
+  def round_robin(opts) do
+    RoundRobin.simulate(opts)
+  end
 
-      iex> Prisoners.hello
-      :world
+  # %{generations: generations, initial_count: initial_count}
+  def generations(opts) do
+    Generations.simulate(opts)
+  end
 
-  """
-  def hello do
-    :world
+  # %{left: left, right: right, runs: runs}
+  def debug(opts) do
+    HeadToHead.debug(opts)
   end
 end

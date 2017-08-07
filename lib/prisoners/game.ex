@@ -1,24 +1,23 @@
 defmodule Prisoners.Game do
-  alias Prisoners.{Result, Score}
+  alias Prisoners.Score
+  defstruct [:left, :right]
 
-  def simulate(%{left: left, right: right, runs: runs}) do
-    simulate_fn = fn history ->
-      result = %Result{
-        left: left.simulate(:left, history),
-        right: right.simulate(:right, history)
-      }
-
-      {result, [result | history]}
-    end
-
-    simulations = []
-    |> Stream.unfold(simulate_fn)
-    |> Enum.take(runs)
-
-    score = simulations
-    |> Stream.map(&Result.score/1)
-    |> Enum.reduce(&Score.merge/2)
-
-    {simulations, score}
+  def score(%__MODULE__{left: :defect, right: :cooperate}) do
+    %Score{left: 3, right: 0}
   end
+
+  def score(%__MODULE__{left: :cooperate, right: :defect}) do
+    %Score{left: 0, right: 3}
+  end
+
+  def score(%__MODULE__{left: :defect, right: :defect}) do
+    %Score{left: 1, right: 1}
+  end
+
+  def score(%__MODULE__{left: :cooperate, right: :cooperate}) do
+    %Score{left: 2, right: 2}
+  end
+
+  def for(:left, %__MODULE__{left: left}), do: left
+  def for(:right, %__MODULE__{right: right}), do: right
 end

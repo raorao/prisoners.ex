@@ -1,6 +1,7 @@
-defmodule GameTest do
+defmodule PrisonersTest do
   use ExUnit.Case
-  alias Prisoners.{Game, Score}
+  alias Prisoners.Score
+  alias Prisoners.Simulation.{HeadToHead}
   alias Prisoners.Personas.{
     AlwaysDefect,
     AlwaysCooperate,
@@ -11,7 +12,7 @@ defmodule GameTest do
 
   describe "scenarios" do
     test "AlwaysDefect <-> AlwaysCooperate" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: AlwaysDefect,
         right: AlwaysCooperate,
         runs: 10
@@ -21,7 +22,7 @@ defmodule GameTest do
     end
 
     test "AlwaysCooperate <-> AlwaysDefect" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: AlwaysCooperate,
         right: AlwaysDefect,
         runs: 10
@@ -31,7 +32,7 @@ defmodule GameTest do
     end
 
     test "AlwaysDefect <-> AlwaysDefect" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: AlwaysDefect,
         right: AlwaysDefect,
         runs: 10,
@@ -41,7 +42,7 @@ defmodule GameTest do
     end
 
     test "AlwaysCooperate <-> AlwaysCooperate" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: AlwaysCooperate,
         right: AlwaysCooperate,
         runs: 10,
@@ -51,7 +52,7 @@ defmodule GameTest do
     end
 
     test "AlwaysDefect <-> MonkeySeeMonkeyDo" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: AlwaysDefect,
         right: MonkeySeeMonkeyDo,
         runs: 10,
@@ -64,7 +65,7 @@ defmodule GameTest do
     end
 
     test "MonkeySeeMonkeyDo <-> AlwaysCooperate" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: MonkeySeeMonkeyDo,
         right: AlwaysCooperate,
         runs: 10,
@@ -74,7 +75,7 @@ defmodule GameTest do
     end
 
     test "BackStabber <-> MonkeySeeMonkeyDo" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: BackStabber,
         right: MonkeySeeMonkeyDo,
         runs: 10,
@@ -95,7 +96,7 @@ defmodule GameTest do
     end
 
     test "MonkeySeeMonkeyDo <-> Envious" do
-      {_simulations, score} = Game.simulate %{
+      score = HeadToHead.simulate %{
         left: AlwaysCooperate,
         right: Envious,
         runs: 10,
